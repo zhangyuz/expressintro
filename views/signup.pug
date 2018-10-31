@@ -1,0 +1,11 @@
+extends layout
+
+block content
+    h1=signup
+    form(action='signup', method='POST')
+        p
+            | name:
+            input(type='text', name='name', value='')
+            |           password:
+            input(type='password', name='password', value='')
+        input(type='submit', value='Submit')
