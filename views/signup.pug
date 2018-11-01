@@ -4,8 +4,14 @@ block content
     h1=signup
     form(action='signup', method='POST')
         p
-            | name:
-            input(type='text', name='name', value='')
+            | username:
+            input(type='text', name='username', value='')
             |           password:
             input(type='password', name='password', value='')
+            |           createAt:
+            input(type='date', name='createAt', value='')
+            |           displayName:
+            input(type='text', name='displayName', value='')
+            |           bio:
+            input(type='text', name='bio', value='')
         input(type='submit', value='Submit')
