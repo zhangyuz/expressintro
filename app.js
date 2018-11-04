@@ -28,6 +28,26 @@ app.use(cookieParser());
 app.use(stylus.middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Demo middleware
+var myLogger = function(req, res, next) {
+    console.log('Info','LOGGED');
+    next();
+};
+app.use(myLogger);
+var requestTime = function(req, res, next) {
+    req.requestTime = Date.now();
+    next();
+};
+app.use(requestTime);
+var configurableMw = function(options){
+    return function(req, res, next) {
+        req.cmwoption = options;
+        console.log(`configurable mw`);
+        next();
+    };
+};
+app.use(configurableMw({optiona: 'heihei'}));
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api', apiRouter);
