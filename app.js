@@ -48,11 +48,54 @@ var configurableMw = function(options){
 };
 app.use(configurableMw({optiona: 'heihei'}));
 
+// my app routing
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api', apiRouter);
 app.use('/mongo', mongoRouter);
 app.use('/signup', signupRouter);
+
+
+// my demo for routing
+// 1) basic route
+app.get('/routing/basic', function(req, res) {
+    res.send('basic route');
+});
+// 2) basic multiple handler
+app.get('/routing/multihandler', function(req, res, next) {
+    res.locals.msg0 = 'Hello from handler0';
+    next();
+}, function(req, res){
+    res.locals.msg1 = 'Hello from handler1';
+    res.send(res.locals.msg0 + '<p>' + res.locals.msg1);
+});
+// 3) handler array
+var cb0 = function(req, res, next) {
+    res.locals.cb0 = 'CB0';
+    if (req.query.skip == 0) {
+        res.send(`${res.locals.cb0} <p>skip 0`);
+    } else {
+        next();
+    }
+};
+
+var cb1 = function(req, res, next) {
+    res.locals.cb1 = 'CB1';
+    if (req.query.skip == 1) {
+        res.send(`${res.locals.cb0} <p>${res.locals.cb1} <p>skip 1`);
+    } else {
+        next();
+    }
+};
+
+var cb2 = function(req, res, next) {
+    res.locals.cb2 = 'CB2';
+    res.send(`Last Callback: <p>${res.locals.cb0} <p>${res.locals.cb1} <p>${res.locals.cb2}`);
+};
+
+var cbs = [cb0, cb1, cb2];
+
+app.get('/routing/handlerarray', cbs);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
