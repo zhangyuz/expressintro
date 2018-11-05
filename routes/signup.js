@@ -26,9 +26,9 @@ router.post('/', function (req, res, next) {
             bio: body.bio,
         });
         user.save().then(() => {
+            console.log(`${user} saved!`);
             res.send(`${user} signed up!`);
         });
-        console.log(`${user} saved!`);
         // res.send(`${user} signed up`);
         // return;
         // res.redirect('/');
