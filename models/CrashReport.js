@@ -8,7 +8,7 @@ var crashReportSchema = mongoose.Schema({
     // dropbox tag
     tag: String,
     // when the crash report is generated
-    createTime: String,
+    createTime: Date,
     // for now dropbox
     from: String,
     // free text in complain report, for now basicly dropbox entry
@@ -18,7 +18,7 @@ var crashReportSchema = mongoose.Schema({
     // Hash code of summary
     summaryHash: String,
     // attachment from report, for now empty
-    attachment: String,
+    attachment: [Buffer],
     // logfile
     logFile: Buffer;
     // ProcessInfo

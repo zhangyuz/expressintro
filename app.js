@@ -5,12 +5,14 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var stylus = require('stylus');
 var mongoose = require('mongoose');
+// var multer = require('multer');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var apiRouter = require('./routes/api');
 var mongoRouter = require('./routes/mongo');
 var signupRouter = require('./routes/signup');
+var crashReportRouter = require('./routes/crashreport');
 
 var app = express();
 
@@ -27,6 +29,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(stylus.middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
+// app.use(multer);
 
 // Demo middleware
 var myLogger = function(req, res, next) {
@@ -54,6 +57,7 @@ app.use('/users', usersRouter);
 app.use('/api', apiRouter);
 app.use('/mongo', mongoRouter);
 app.use('/signup', signupRouter);
+app.use('/crashreport', crashReportRouter);
 
 
 // my demo for routing
