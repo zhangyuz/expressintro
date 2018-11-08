@@ -1,8 +1,10 @@
 var express = require('express');
+var CrashReport = require('../models/CrashReport');
 var multer = require('multer');
 const FIELDNAMEATTACHMENTS = 'attachments';
 const FIELDNAMELOGFILE = 'logfile';
-var upload = multer();
+var memStorage = multer.memoryStorage();
+var upload = multer({storage: memStorage});
 var crashFields = upload.fields([{ name: FIELDNAMEATTACHMENTS, maxCount: 10 },
     { name: FIELDNAMELOGFILE, maxCount: 1 }]);
 var router = express.Router();
@@ -17,11 +19,12 @@ router.route('/')
         console.log(req.body);
         console.log(req.body.metadata);
         console.log(JSON.parse(req.body.metadata).tag);
+        var crashReport = new CrashReport(JSON.parse(req.body.metadata));
         var fileNameList = '';
-        attachents = req.files[FIELDNAMEATTACHMENTS];
-        for (i = 0; i < attachents.length; i++) {
-            console.log(`${attachents[i].originalname}`);
-            fileNameList = fileNameList + attachents[i].originalname + '\n';
+        attachments = req.files[FIELDNAMEATTACHMENTS];
+        for (i = 0; i < attachments.length; i++) {
+            console.log(`${attachments[i].originalname}`);
+            fileNameList = fileNameList + attachments[i].originalname + '\n';
         }
 
         logfiles = req.files[FIELDNAMELOGFILE];
@@ -30,7 +33,11 @@ router.route('/')
             fileNameList = fileNameList + logfiles[i].originalname + '\n';
         }
 
-        res.send(`Crash Reports\n${req.body.metadata}\n${fileNameList}`);
+        crashReport.attachments = attachments;
+        crashReport.logFiles = logfiles;
+        crashReport.save().then(() => {
+            res.send(`Crash Reports\n${req.body.metadata}\n${fileNameList}`);
+        });
     });
 
 module.exports = router;

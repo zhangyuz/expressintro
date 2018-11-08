@@ -18,6 +18,6 @@ deviceInfoSchema.methods.getSerail = () => {
     return this.serial;
 };
 
-var DeviceInfo = mongoose.Model('DeviceInfo', deviceInfoSchema);
+var DeviceInfo = mongoose.model('DeviceInfo', deviceInfoSchema);
 module.exports = DeviceInfo;
 

@@ -18,9 +18,9 @@ var crashReportSchema = mongoose.Schema({
     // Hash code of summary
     summaryHash: String,
     // attachment from report, for now empty
-    attachment: [Buffer],
-    // logfile
-    logFile: Buffer;
+    attachments: [Buffer],
+    // logfile,for now ,only one logfile allowed
+    logFiles: [Buffer],
     // ProcessInfo
     processInfo: mongoose.SchemaTypes.Mixed,
     // DeviceInfo
@@ -30,6 +30,6 @@ var crashReportSchema = mongoose.Schema({
 });
 
 
-var CrashReport = mongoose.Model('CrashReport', crashReportSchame);
+var CrashReport = mongoose.model('CrashReport', crashReportSchema);
 
 module.exports = CrashReport;

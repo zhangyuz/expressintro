@@ -10,6 +10,6 @@ var systemInfoSchema = mongoose.Schema({
     sdkInt: String,
 });
 
-var SystemInfo = mongoose.Model('SystemInfo', systemInfoSchema);
+var SystemInfo = mongoose.model('SystemInfo', systemInfoSchema);
 
 module.exports = SystemInfo;

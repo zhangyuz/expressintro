@@ -6,5 +6,5 @@ var processInfoSchema = mongoose.Schema({
     processName: String,
 });
 
-var ProcessInfo = mongoose.Model('ProcessInfo', processInfoSchema);
+var ProcessInfo = mongoose.model('ProcessInfo', processInfoSchema);
 module.exports = ProcessInfo;
