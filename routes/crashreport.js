@@ -1,11 +1,12 @@
 var express = require('express');
 var CrashReport = require('../models/CrashReport');
+var Attachment = require('../models/Attachment');
 var multer = require('multer');
 const FIELDNAMEATTACHMENTS = 'attachments';
-const FIELDNAMELOGFILE = 'logfile';
+const FIELDNAMELOGFILE = 'logfiles';
 var upload = multer();
 var crashFields = upload.fields([{ name: FIELDNAMEATTACHMENTS, maxCount: 10 },
-    { name: FIELDNAMELOGFILE, maxCount: 1 }]);
+    { name: FIELDNAMELOGFILE, maxCount: 10 }]);
 var router = express.Router();
 
 router.route('/')
@@ -25,14 +26,24 @@ router.route('/')
         for (i = 0; i < attachments.length; i++) {
             console.log(`${attachments[i].originalname}`);
             fileNameList = fileNameList + attachments[i].originalname + '\n';
-            crashReport.attachments[i] = attachments[i].buffer;
+            var attachment = new Attachment({
+                originalname: attachments[i].originalname,
+                mimetype: attachments[i].mimetype,
+                buffer: attachments[i].buffer,
+            });
+            crashReport.attachments[i] = attachment;
         }
 
         logfiles = req.files[FIELDNAMELOGFILE];
         for (i = 0; i < logfiles.length; i++) {
             console.log(`${logfiles[i].originalname}`);
             fileNameList = fileNameList + logfiles[i].originalname + '\n';
-            crashReport.logFiles[i] = logfiles[i].buffer;
+            var logfile  = new Attachment({
+                originalname: logfiles[i].originalname,
+                mimetype: logfiles[i].mimetype,
+                buffer: logfiles[i].buffer,
+            });
+            crashReport.logFiles[i] = logfile;
         }
 
         crashReport.save().then(() => {

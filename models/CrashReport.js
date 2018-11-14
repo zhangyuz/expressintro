@@ -17,10 +17,10 @@ var crashReportSchema = mongoose.Schema({
     summary: String,
     // Hash code of summary
     summaryHash: String,
-    // attachment from report, for now empty
-    attachments: [Buffer],
-    // logfile,for now ,only one logfile allowed
-    logFiles: [Buffer],
+    // attachment from report, max 10 files, in type of Attachment
+    attachments: [mongoose.SchemaTypes.Mixed],
+    // logfile,max 10 files, in type of Attachment
+    logFiles: [mongoose.SchemaTypes.Mixed],
     // ProcessInfo
     processInfo: mongoose.SchemaTypes.Mixed,
     // DeviceInfo
