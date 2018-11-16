@@ -47,7 +47,8 @@ router.route('/')
         }
 
         crashReport.save().then(() => {
-            res.send(`Crash Reports\n${req.body.metadata}\n${fileNameList}`);
+            //res.send(`Crash Reports\n${req.body.metadata}\n${fileNameList}`);
+            res.json({successful: true, msg: `Crash Reports\n${req.body.metadata}\n${fileNameList}`});
         });
     });
 
