@@ -12,3 +12,5 @@ curl -X POST http://xxx.xxx.xx.xxx:3000/crashreport
     -F 'attachments=@attachement.file1' \
     -F 'logfiles=@xxx.logfile1'
 ```
+## Graphql
+[Graphql Tutorial](https://blog.apollographql.com/tutorial-building-a-graphql-server-cddaa023c035)
