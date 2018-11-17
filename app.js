@@ -6,12 +6,6 @@ var logger = require('morgan');
 var stylus = require('stylus');
 var mongoose = require('mongoose');
 // var multer = require('multer');
-// import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
-var apollo = require('apollo-server-express');
-var graphqlExpress = apollo.graphqlExpress;
-var graphiqlExpress = apollo.graphiqlExpress ;
-var bodyParser = require('body-parser');
-var schema = require('./models/graphql/schema');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -19,6 +13,8 @@ var apiRouter = require('./routes/api');
 var mongoRouter = require('./routes/mongo');
 var signupRouter = require('./routes/signup');
 var crashReportRouter = require('./routes/crashreport');
+var graphqlRouter = require('./routes/graphql');
+var graphiqlRouter = require('./routes/graphiql');
 
 var app = express();
 
@@ -28,9 +24,6 @@ mongoose.connect('mongodb://localhost:27017/expressintro');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-
-app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
-app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -67,7 +60,8 @@ app.use('/api', apiRouter);
 app.use('/mongo', mongoRouter);
 app.use('/signup', signupRouter);
 app.use('/crashreport', crashReportRouter);
-
+app.use('/graphql', graphqlRouter);
+app.use('/graphiql', graphiqlRouter);
 
 // my demo for routing
 // 1) basic route
