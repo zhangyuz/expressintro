@@ -14,3 +14,7 @@ curl -X POST http://xxx.xxx.xx.xxx:3000/crashreport
 ```
 ## Graphql
 [Graphql Tutorial](https://blog.apollographql.com/tutorial-building-a-graphql-server-cddaa023c035)
+
+## 使用 nodemon 在修改源码后自动加载
+1. 全局安装 `nodemon`，使 `nodemon` 命令可以全局使用， `npm install nodemon -g`
+2. 使用 `nodemon` 命令代替 `node` 启动脚本。
